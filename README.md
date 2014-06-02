@@ -6,7 +6,8 @@ plumbing-atkinson-server is a simple Flask-based HTTP-pony to dither images.
 
 * Documentation
 * HTTP `POST` support
-* Limit HTTP `GET` requests to images located in a single directory
+* Get from URL support
+* Better config options
 * A proper `setup.py` file
 * A proper `init.d` file for running as a persistent daemon
 
