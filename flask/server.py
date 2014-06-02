@@ -9,10 +9,16 @@ import dither
 
 import os.path
 import logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 app = flask.Flask(__name__)
 app.config['USE_X_SENDFILE'] = True
+
+# Quick. And dirty. (20140602/straup)
+
+if os.environ.get('ATKINSON_SERVER_IMAGE_ROOT', None):
+    logging.info("configuring image server root")
+    app.config['ATKINSON_SERVER_IMAGE_ROOT'] = os.environ['ATKINSON_SERVER_IMAGE_ROOT']
 
 @app.route('/ping', methods=['GET'])
 @cross_origin(methods=['GET'])
@@ -21,22 +27,26 @@ def ping():
     return flask.jsonify(**rsp)
 
 @app.route('/atk', methods=['GET'])
-@cross_origin(methods=['GET'])
 def atk():
 
     src = flask.request.args.get('path')
-    logging.info("request path is %s" % src)
+    logging.debug("request path is %s" % src)
 
-    root = app.config.get('PLUMBING_ATKINSON_SERVER_IMAGE_ROOT', None)
+    root = app.config.get('ATKINSON_SERVER_IMAGE_ROOT', None)
 
     if root:
-        src = safe_join(root, src)
-        logging.info("request path is now '%s'" % src)     
+        safe = safe_join(root, src)
 
-        if not src:
+        if not safe:
+            logging.error("'%s' + '%s' considered harmful" % (root, src))
             flask.abort(400)
 
+        src = safe
+
+    logging.debug("final request path is %s" % src)
+    
     if not os.path.exists(src):
+        logging.error("%s does not exist" % src)
         flask.abort(404)
 
     dest = StringIO.StringIO()
@@ -49,6 +59,4 @@ def atk():
 
 if __name__ == '__main__':
     debug = True	# sudo make me a CLI option
-
-    app.config['PLUMBING_ATKINSON_SERVER_IMAGE_ROOT'] = 'foo'
     app.run(debug=debug)
