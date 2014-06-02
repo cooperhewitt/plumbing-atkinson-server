@@ -2,6 +2,7 @@
 
 import flask
 from flask_cors import cross_origin 
+from werkzeug.security import safe_join
 
 import StringIO
 import dither
@@ -11,6 +12,7 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 
 app = flask.Flask(__name__)
+app.config['USE_X_SENDFILE'] = True
 
 @app.route('/ping', methods=['GET'])
 @cross_origin(methods=['GET'])
@@ -23,18 +25,16 @@ def ping():
 def atk():
 
     src = flask.request.args.get('path')
+    logging.info("request path is %s" % src)
 
-    src = src.replace("../", "")
-    src = os.path.relpath(src)
+    root = app.config.get('PLUMBING_ATKINSON_SERVER_IMAGE_ROOT', None)
 
-    # This is not working yet...
+    if root:
+        src = safe_join(root, src)
+        logging.info("request path is now '%s'" % src)     
 
-    try:
-        root = app.config.from_envvar('PLUMBING_ATKINSON_SERVER_IMAGE_ROOT')
-        src = os.path.join(root, src)
-    except Exception, e:
-        logging.info("no envvar")
-        pass
+        if not src:
+            flask.abort(400)
 
     if not os.path.exists(src):
         flask.abort(404)
@@ -49,4 +49,6 @@ def atk():
 
 if __name__ == '__main__':
     debug = True	# sudo make me a CLI option
+
+    app.config['PLUMBING_ATKINSON_SERVER_IMAGE_ROOT'] = 'foo'
     app.run(debug=debug)
