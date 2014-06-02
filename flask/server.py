@@ -7,6 +7,7 @@ from werkzeug.security import safe_join
 import StringIO
 import dither
 
+import os
 import os.path
 import logging
 logging.basicConfig(level=logging.INFO)
@@ -14,10 +15,12 @@ logging.basicConfig(level=logging.INFO)
 app = flask.Flask(__name__)
 app.config['USE_X_SENDFILE'] = True
 
-# Quick. And dirty. (20140602/straup)
+# Quick. And dirty. To figure out:
+# http://flask.pocoo.org/docs/config/
+# https://github.com/mbr/flask-appconfig
+# (20140602/straup)
 
 if os.environ.get('ATKINSON_SERVER_IMAGE_ROOT', None):
-    logging.info("configuring image server root")
     app.config['ATKINSON_SERVER_IMAGE_ROOT'] = os.environ['ATKINSON_SERVER_IMAGE_ROOT']
 
 @app.route('/ping', methods=['GET'])
