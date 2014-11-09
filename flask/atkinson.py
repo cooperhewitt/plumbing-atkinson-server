@@ -10,29 +10,30 @@ def dither(src_path, dest_path, mime_type='GIF'):
         try:
             return dither_image_atk(src_path, dest_path, mime_type)
         except Exception, e:
+            logging.debug("dither using pure python")
             return dither_image_python(src_path, dest_path, mime_type)
         
-        except Exception, e:
+    except Exception, e:
             
-            # Sigh... things like: IOError: Unsupported BMP compression (1)
-            
-            logging.error("failed to dither %s: %s" % (src_path, e))
-            return False
+        # Sigh... things like: IOError: Unsupported BMP compression (1)
+        
+        logging.error("failed to dither %s: %s" % (src_path, e))
+        return False
 
 def dither_image_atk(src_path, dest_path, mime_type):
 
-        import atk
-        img = Image.open(src_path)
-        img = img.convert('L')
-        sz = img.size
-        
-        tmp = atk.atk(sz[0], sz[1], img.tostring())
-        new = Image.fromstring('L', sz, tmp)
-
-        new = img.convert('1')
-        new.save(dest_path, mime_type)
-        return True
-
+    import atk
+    img = Image.open(src_path)
+    img = img.convert('L')
+    sz = img.size
+    
+    tmp = atk.atk(sz[0], sz[1], img.tostring())
+    new = Image.fromstring('L', sz, tmp)
+    
+    new = img.convert('1')
+    new.save(dest_path, mime_type)
+    return True
+    
 def dither_image_python(src_path, dest_path, mime_type):
 
     img = Image.open(src_path)
