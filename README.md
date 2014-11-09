@@ -33,9 +33,15 @@ library which checks your Flask application's configuration for details about
 how to handle things.
 
 The following settings should be added to a standard [ini style configutation
-file](https://en.wikipedia.org/wiki/INI_file) in an `http_pony` section.
+file](https://en.wikipedia.org/wiki/INI_file).
 
-### http_pony
+### [flask]
+
+#### port
+
+The Unix TCP port you want your Flask server to listen on.
+
+### [http_pony]
 
 #### local_path_root
 

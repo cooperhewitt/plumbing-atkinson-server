@@ -87,4 +87,7 @@ if __name__ == '__main__':
 
     http_pony.update_app_config(app, cfg)
 
-    app.run()
+    port = cfg.get('flask', 'port')
+    port = int(port)
+
+    app.run(port=port)
