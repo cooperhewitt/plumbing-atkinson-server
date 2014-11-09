@@ -27,7 +27,7 @@ def ping():
 
     return flask.jsonify({'stat': 'ok'})
 
-@app.route('/dither', methods=['GET'])
+@app.route('/dither', methods=['GET', 'POST'])
 def dither():
 
     try:
