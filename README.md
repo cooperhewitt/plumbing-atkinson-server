@@ -9,7 +9,7 @@ plumbing-atkinson-server is a simple Flask-based HTTP-pony to dither images.
 
 ## Endpoints
 
-### /ping 
+### GET /ping 
 
 	curl -X GET 'http://localhost:5000/ping'
 
@@ -17,11 +17,13 @@ plumbing-atkinson-server is a simple Flask-based HTTP-pony to dither images.
 		"stat": "ok"
 	}
 
-### /dither
-
-	# curl -X POST -F 'file=@/tmp/test.jpg' 'http://localhost:5000/dither'
+### GET /dither
 
 	curl -X GET 'http://localhost:5000/dither?file=test.png'
+
+### POST /dither
+
+	curl -X POST -F 'file=@/tmp/test.jpg' 'http://localhost:5000/dither'
 
 ## Config
 
