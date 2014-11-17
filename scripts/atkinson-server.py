@@ -75,9 +75,15 @@ if __name__ == '__main__':
     else:
         logging.basicConfig(level=logging.INFO)
 
-    cfg = http_pony.update_app_config_from_file(app, opts.config)
+    kwargs = {}
 
-    port = cfg.get('flask', 'port')
-    port = int(port)
+    # if not the os.environ('ATKINSON_SERVER_CONFIG')
 
-    app.run(port=port)
+    if opts.config:
+
+        cfg = http_pony.update_app_config_from_file(app, opts.config)
+
+        port = cfg.get('flask', 'port')
+        kwargs['port'] = int(port)
+
+    app.run(**kwargs)
