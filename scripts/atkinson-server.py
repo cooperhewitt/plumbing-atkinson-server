@@ -7,19 +7,13 @@ import StringIO
 import logging
 import os
 
-try:
-    # https://github.com/cooperhewitt/py-cooperhewitt-roboteyes-atkinson
-    import cooperhewitt.roboteyes.atkinson as atkinson
-except Exception, e:
-    import atkinson
+import cooperhewitt.roboteyes.atkinson as atkinson
+import cooperhewitt.flask.http_pony as http_pony
 
-try:
-    # https://github.com/cooperhewitt/py-cooperhewitt-flask
-    import cooperhewitt.flask.http_pony as http_pony
-except Exception, e:
-    import http_pony
+# This replaces the normal
+# 'app = flask.Flask(__name__)' dance
 
-app = flask.Flask(__name__)
+app = http_pony.setup_flask_app('ATKINSON_SERVER')
 
 @app.route('/ping', methods=['GET'])
 @cross_origin(methods=['GET'])
@@ -67,7 +61,6 @@ if __name__ == '__main__':
 
     import sys
     import optparse
-    import ConfigParser
 
     parser = optparse.OptionParser()
 
@@ -82,10 +75,7 @@ if __name__ == '__main__':
     else:
         logging.basicConfig(level=logging.INFO)
 
-    cfg = ConfigParser.ConfigParser()
-    cfg.read(opts.config)
-
-    http_pony.update_app_config(app, cfg)
+    cfg = http_pony.update_app_config_from_file(app, opts.config)
 
     port = cfg.get('flask', 'port')
     port = int(port)

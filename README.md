@@ -2,9 +2,13 @@
 
 plumbing-atkinson-server is a simple Flask-based HTTP-pony to dither images.
 
-## Setup
+## Install
 
-	python ./flask/server.py -c server.cfg
+	python ./setup.py install
+
+## Example
+
+	python ./scripts/atkinson-server.py -c server.cfg
 	INFO:werkzeug: * Running on http://127.0.0.1:5000/
 
 ## Endpoints
