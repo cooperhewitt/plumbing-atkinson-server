@@ -10,9 +10,6 @@ import os
 import cooperhewitt.roboteyes.atkinson as atkinson
 import cooperhewitt.flask.http_pony as http_pony
 
-# This replaces the normal
-# 'app = flask.Flask(__name__)' dance
-
 app = http_pony.setup_flask_app('ATKINSON_SERVER')
 
 @app.route('/ping', methods=['GET'])
@@ -59,31 +56,5 @@ def dither():
 
 if __name__ == '__main__':
 
-    import sys
-    import optparse
-
-    parser = optparse.OptionParser()
-
-    parser.add_option("-c", "--config", dest="config", help="", action="store", default=None)
-    parser.add_option("-v", "--verbose", dest="verbose", help="enable chatty logging; default is false", action="store_true", default=False)
-
-    opts, args = parser.parse_args()
-
-    if opts.verbose:
-        logging.basicConfig(level=logging.DEBUG)
-        logging.debug("verbose logging is enabled")
-    else:
-        logging.basicConfig(level=logging.INFO)
-
-    kwargs = {}
-
-    # if not the os.environ('ATKINSON_SERVER_CONFIG')
-
-    if opts.config:
-
-        cfg = http_pony.update_app_config_from_file(app, opts.config)
-
-        port = cfg.get('flask', 'port')
-        kwargs['port'] = int(port)
-
-    app.run(**kwargs)
+    # app is defined above, remember
+    http_pony.run_from_cli(app)

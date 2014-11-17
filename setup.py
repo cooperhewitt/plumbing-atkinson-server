@@ -10,7 +10,7 @@ setup(name='plumbing-atkinson-server',
       requires=[
       ],
       dependency_links=[
-          'https://github.com/cooperhewitt/py-cooperhewitt-flask/tarball/master#egg=cooperhewitt.flask-0.33',
+          'https://github.com/cooperhewitt/py-cooperhewitt-flask/tarball/master#egg=cooperhewitt.flask-0.34',
           'https://github.com/cooperhewitt/py-cooperhewitt-roboteyes-atkinson/tarball/master#egg=cooperhewitt.roboteyes.atkinson-0.2',
       ],
       install_requires=[
