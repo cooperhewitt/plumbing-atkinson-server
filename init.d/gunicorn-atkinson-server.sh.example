@@ -4,7 +4,7 @@
 # http://werxltd.com/wp/2012/01/05/simple-init-d-script-template/
 
 # To make sure this runs at startup, do:
-# update-rc.d atkinson-server.sh defaults
+# update-rc.d gunicorn-atkinson-server.sh defaults
 
 # Adjust to taste
 ATKINSON_SERVER_CONFIG='/usr/local/plumbing-atkinson-server/init.d/gunicorn-atkinson-server.cfg'
