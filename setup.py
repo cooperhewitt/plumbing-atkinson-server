@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(name='plumbing-atkinson-server',
       version='0.2',
-      description='',
+      description='A Flask based HTTP pony for dithering images using an Atkinson filter',
       author='Cooper Hewitt Smithsonian Design Museum',
       url='https://github.com/cooperhewitt/plumbing-atkinson-server',
       requires=[
@@ -21,5 +21,5 @@ setup(name='plumbing-atkinson-server',
       scripts=[
           'scripts/atkinson-server.py',
       ],
-      download_url='',
+      download_url='https://github.com/cooperhewitt/plumbing-atkinson-server/tarball/master#egg=plumbing-atkinson-server-0.2',
       license='BSD')

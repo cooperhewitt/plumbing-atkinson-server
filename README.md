@@ -11,6 +11,12 @@ plumbing-atkinson-server is a simple Flask-based HTTP-pony to dither images.
 	python ./scripts/atkinson-server.py -c server.cfg
 	INFO:werkzeug: * Running on http://127.0.0.1:5000/
 
+Or:
+
+	setenv ATKINSON_SERVER_CONFIG server.cfg
+	python ./scripts/atkinson-server.py
+	INFO:werkzeug: * Running on http://127.0.0.1:5000/
+
 ## Endpoints
 
 ### GET /ping 
@@ -65,28 +71,12 @@ If not set then the operating system's temporary directory will be used.
 
 A comma-separate list of valid file extensions for processing.
 
-## Dependencies
-
-### Things you'll need to install yourself
-
-_Pending a proper `setup.py` file._
-
-* [Flask](http://flask.pocoo.org/)
-* [Flask-Cors](https://pypi.python.org/pypi/Flask-Cors/)
-
-### Things that come pre-bundled
-
-_The following are required but are available as libraries local to the server itself if not already pre-installed._
-
-* [cooperhewitt.flask.http_pony](https://github.com/cooperhewitt/py-cooperhewitt-flask)
-* [cooperhewitt.roboteyes.atkinson](https://github.com/cooperhewitt/py-cooperhewitt-roboteyes-atkinson)
-
-## To do:
-
-* A proper `setup.py` file
-
 ## See also:
 
+* http://flask.pocoo.org/
+* https://pypi.python.org/pypi/Flask-Cors/
+* https://github.com/cooperhewitt/py-cooperhewitt-flask
+* https://github.com/cooperhewitt/py-cooperhewitt-roboteyes-atkinson
 * https://github.com/migurski/atkinson
 * http://mike.teczno.com/notes/atkinson.html
 * http://en.wikipedia.org/wiki/Bill_Atkinson
