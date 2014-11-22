@@ -1,0 +1,14 @@
+# http://gunicorn-docs.readthedocs.org/en/latest/configure.html#configuration-file
+
+import os
+import multiprocessing
+
+workers = multiprocessing.cpu_count() * 2 + 1
+worker_class = "egg:gunicorn#gevent"
+
+bind = '127.0.0.1:8231'
+chdir = '/usr/local/bin/'
+
+# Not this config file but this one:
+# https://github.com/cooperhewitt/plumbing-atkinson-server#config
+os.environ['ATKINSON_SERVER_CONFIG'] = '/path/to/server.cfg'
